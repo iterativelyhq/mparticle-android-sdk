@@ -59,7 +59,7 @@ uploadArchives{
                 packaging 'aar'
                 name project.ext.kitDescription
                 description project.ext.kitDescription
-                url 'https://github.com/mparticle/mparticle-sdk-android'
+                url 'https://github.com/iterativelyhq/mparticle-android-sdk'
 
                 licenses {
                     license {
@@ -69,16 +69,16 @@ uploadArchives{
                 }
 
                 scm {
-                    url 'https://github.com/mparticle/mparticle-android-sdk'
-                    connection 'scm:git:https://github.com/mparticle/mparticle-android-sdk'
-                    developerConnection 'scm:git:git@github.com:mparticle/mparticle-android-sdk.git'
+                    url 'https://github.com/iterativelyhq/mparticle-android-sdk'
+                    connection 'scm:git:https://github.com/iterativelyhq/mparticle-android-sdk'
+                    developerConnection 'scm:git:https://github.com/iterativelyhq/mparticle-android-sdk.git'
                 }
 
                 developers {
                     developer {
-                        id 'mParticle'
-                        name 'mParticle Inc.'
-                        email 'developers@mparticle.com'
+                        id = 'iteratively-justin'
+                        name = 'Justin Fiedler'
+                        email = 'justin@iterative.ly'
                     }
                 }
             }
