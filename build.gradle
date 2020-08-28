@@ -24,7 +24,7 @@ sonarqube {
 }
 
 allprojects {
-    group = 'com.mparticle'
+    group = 'ly.iterative.mparticle'
     version = '5.14.10-SNAPSHOT'
     if (project.hasProperty('isRelease') && project.isRelease) {
         version = version.toString().replace("-SNAPSHOT", "")
