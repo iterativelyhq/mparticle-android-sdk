@@ -390,9 +390,6 @@ public class MParticle {
         } else {
             if (mConfigManager.isEnabled()) {
                 mAppStateManager.ensureActiveSession();
-                if (logEventToItly(event.toString(), MParticle.EventType.Other, event)) {
-                    return;
-                }
                 Logger.debug("Logged event - \n", event.toString());
                 mKitManager.logEvent(event);
             }
