@@ -19,7 +19,6 @@ import android.os.Process;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
-import com.mparticle.BaseEvent;
 import com.mparticle.InstallReferrerHelper;
 import com.mparticle.MPEvent;
 import com.mparticle.MParticle;
@@ -66,6 +65,7 @@ public class MessageManager implements MessageManagerCallbacks, ReportingManager
     private ConfigManager mConfigManager = null;
     private MParticleDBManager mMParticleDBManager;
     private MParticle.OperatingSystem mOperatingSystem;
+
 
     /**
      * These two threads are used to do the heavy lifting.
@@ -319,6 +319,7 @@ public class MessageManager implements MessageManagerCallbacks, ReportingManager
             mMessageHandler.sendMessage(message);
         }
     }
+
 
     public BaseMPMessage logEvent(MPEvent event, String currentActivity) {
         if (event != null) {
