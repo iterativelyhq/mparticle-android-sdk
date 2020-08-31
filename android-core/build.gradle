@@ -6,8 +6,7 @@ apply plugin: 'com.android.library'
 apply from: '../scripts/maven.gradle'
 apply plugin: 'kotlin-android'
 
-//def javaVersion = JavaVersion.VERSION_1_6
-def javaVersion = JavaVersion.VERSION_1_7
+def javaVersion = JavaVersion.VERSION_1_6
 
 android {
     compileSdkVersion 28

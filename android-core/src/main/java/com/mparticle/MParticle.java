@@ -61,6 +61,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import ly.iterative.itly.Event;
+import ly.iterative.itly.android.Itly;
+
 /**
  * The primary access point to the mParticle SDK. In order to use this class, you must first call {@link #start(MParticleOptions)}. You can then retrieve a reference
  * to an instance of this class via {@link #getInstance()}.
@@ -97,6 +100,9 @@ public class MParticle {
     @NonNull protected Internal mInternal = new Internal();
     private IdentityStateListener mDeferredModifyPushRegistrationListener;
 
+    private static final String ITLY_ATTRIBUTE_KEY = "$itly";
+    private Itly mItly;
+
     protected MParticle() { }
     
     private MParticle(MParticleOptions options) {
@@ -119,6 +125,7 @@ public class MParticle {
         mMessageManager = new MessageManager(configManager, appStateManager, sDevicePerformanceMetricsDisabled, mDatabaseManager, options);
         mConfigManager.setNetworkOptions(options.getNetworkOptions());
         mPreferences = options.getContext().getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+        mItly = options.getItly();
     }
 
     /**
@@ -338,6 +345,43 @@ public class MParticle {
         return InstallReferrerHelper.getInstallReferrer(mAppContext);
     }
 
+    /**
+     * Logs event via Itly depending on configuration. Returns true if event was logged, false otherwise
+     *
+     * @param eventName
+     * @param eventType
+     * @param event
+     * @return
+     */
+    private boolean logEventToItly(String eventName, MParticle.EventType eventType, BaseEvent event) {
+        // Check for $itly property
+        if (event.getCustomAttributes() != null && event.getCustomAttributes().containsKey(ITLY_ATTRIBUTE_KEY)) {
+            // if $itly is found, remove it and track via standard mParticle logic
+            Map<String, String> sanitizedAttributes = new HashMap<String, String>(event.getCustomAttributes());
+            sanitizedAttributes.remove(ITLY_ATTRIBUTE_KEY);
+            event.setCustomAttributes(sanitizedAttributes);
+        } else if (mItly != null) {
+            // Construct metadata
+            Map<String, Object> mpMetadata = new HashMap<String, Object>();
+            mpMetadata.put("eventType", eventType);
+            if (event.getCustomFlags() != null) {
+                mpMetadata.put("customFlags", event.getCustomFlags());
+            }
+            Map<String, Map<String, Object>> metadata = new HashMap<String, Map<String, Object>>();
+            metadata.put("mparticle", mpMetadata);
+
+            mItly.track(new Event(
+                    eventName,
+                    event.getCustomAttributes(),
+                    null,
+                    null,
+                    metadata
+            ));
+            return true;
+        }
+        return false;
+    }
+
     public void logEvent(@NonNull BaseEvent event) {
         if (event instanceof MPEvent) {
             logMPEvent((MPEvent)event);
@@ -346,6 +390,9 @@ public class MParticle {
         } else {
             if (mConfigManager.isEnabled()) {
                 mAppStateManager.ensureActiveSession();
+                if (logEventToItly(event.toString(), MParticle.EventType.Other, event)) {
+                    return;
+                }
                 Logger.debug("Logged event - \n", event.toString());
                 mKitManager.logEvent(event);
             }
@@ -360,6 +407,9 @@ public class MParticle {
     private void logMPEvent(@NonNull MPEvent event) {
         if (mConfigManager.isEnabled()) {
             mAppStateManager.ensureActiveSession();
+            if (logEventToItly(event.getEventName(), event.getEventType(), event)) {
+                return;
+            }
             mMessageManager.logEvent(event, mAppStateManager.getCurrentActivityName());
             Logger.debug("Logged event - \n", event.toString());
             mKitManager.logEvent(event);
@@ -378,6 +428,9 @@ public class MParticle {
         if (mConfigManager.isEnabled()) {
             MParticleUser user = MParticle.getInstance().Identity().getCurrentUser();
             mAppStateManager.ensureActiveSession();
+            if (logEventToItly(event.getEventName(), MParticle.EventType.Other, event)) {
+                return;
+            }
             mMessageManager.logEvent(event);
             Logger.debug("Logged commerce event - \n", event.toString());
             mKitManager.logEvent(event);
