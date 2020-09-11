@@ -66,7 +66,6 @@ public class MessageManager implements MessageManagerCallbacks, ReportingManager
     private MParticleDBManager mMParticleDBManager;
     private MParticle.OperatingSystem mOperatingSystem;
 
-
     /**
      * These two threads are used to do the heavy lifting.
      * The Message Handler primarly stores messages in the database.
