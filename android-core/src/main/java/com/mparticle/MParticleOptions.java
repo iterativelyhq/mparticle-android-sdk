@@ -14,7 +14,7 @@ import com.mparticle.internal.PushRegistrationHelper;
 import com.mparticle.networking.NetworkOptions;
 import com.mparticle.networking.NetworkOptionsManager;
 
-import ly.iterative.itly.android.Itly;
+import ly.iterative.itly.android.IItly;
 
 /**
  * class used for passing optional settings to the SDK when it is started.
@@ -44,7 +44,7 @@ public class MParticleOptions {
     private String mDataplanId;
     private Integer mDataplanVersion;
     private MParticle.OperatingSystem mOperatingSystem = MParticle.OperatingSystem.ANDROID;
-    private Itly mItly;
+    private IItly mItly;
 
     private MParticleOptions() {
     }
@@ -270,7 +270,7 @@ public class MParticleOptions {
     }
 
     @Nullable
-    public Itly getItly() {
+    public IItly getItly() {
         return mItly;
     }
 
@@ -297,7 +297,7 @@ public class MParticleOptions {
         private String dataplanId;
         private Integer dataplanVersion;
         private MParticle.OperatingSystem operatingSystem;
-        private Itly itly;
+        private IItly itly;
 
         private Builder(Context context) {
             this.context = context;
@@ -566,7 +566,7 @@ public class MParticleOptions {
          * @return
          */
         @NonNull
-        public Builder itly(Itly itly) {
+        public Builder itly(IItly itly) {
             this.itly = itly;
             return this;
         }

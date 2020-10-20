@@ -62,7 +62,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ly.iterative.itly.Event;
-import ly.iterative.itly.android.Itly;
+import ly.iterative.itly.android.IItly;
 
 /**
  * The primary access point to the mParticle SDK. In order to use this class, you must first call {@link #start(MParticleOptions)}. You can then retrieve a reference
@@ -101,7 +101,7 @@ public class MParticle {
     private IdentityStateListener mDeferredModifyPushRegistrationListener;
 
     private static final String ITLY_ATTRIBUTE_KEY = "$itly";
-    private Itly mItly;
+    private IItly mItly;
 
     protected MParticle() { }
     
@@ -371,11 +371,11 @@ public class MParticle {
             metadata.put("mparticle", mpMetadata);
 
             mItly.track(new Event(
-                    eventName,
-                    event.getCustomAttributes(),
-                    null,
-                    null,
-                    metadata
+                eventName,
+                event.getCustomAttributes(),
+                null,
+                null,
+                metadata
             ));
             return true;
         }

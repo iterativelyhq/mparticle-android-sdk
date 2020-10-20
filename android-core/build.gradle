@@ -9,8 +9,8 @@ apply plugin: 'kotlin-android'
 def javaVersion = JavaVersion.VERSION_1_6
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
     packagingOptions {
         exclude 'META-INF/LICENSE'
     }
@@ -46,7 +46,7 @@ android {
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionName project.version.toString().replace('-SNAPSHOT', '')
         versionCode Integer.parseInt(new Date().format('yyyyMMdd'))
 
@@ -120,7 +120,7 @@ dependencies {
     compileOnly 'com.google.android.instantapps:instantapps:[1.0, )'
 
     // Iteratively
-    implementation 'ly.iterative.itly:sdk-android:1.1.1'
+    implementation 'ly.iterative.itly:sdk-android:1.2.0'
 
     //the junit tests seem to explicitly need this dependency while
     //working in Android studio, but from the command line it's not necessary
