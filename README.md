@@ -1,3 +1,11 @@
+# mParticle Android SDK (with Iteratively integration)
+
+## DEPRECATION NOTICE
+This project is no longer actively maintained. If this integration is of interest to you please contact support@iterative.ly for more information.
+
+## Usage
+By simply replacing your existing mparticle-android-sdk with this version you can validate and audit events against your Iteratively tracking plan without any additional instrumentation.
+
 <img src="https://static.mparticle.com/sdk/mp_logo_black.svg" width="280">
 
 ## Android SDK
